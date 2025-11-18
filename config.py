@@ -1,6 +1,7 @@
 db_config = {
-    "host": "localhost",
-    "user": "root",
-    "password": "Viswa@240530",
-    "database": "library_db"
+    "host": "bgtjacxbbealzli6ho8y-mysql.services.clever-cloud.com",
+    "user": "uzmbhgn5ytipvusy",
+    "password": "Vwy1FJb1NHwQvBHStyQQ",
+    "database": "bgtjacxbbealzli6ho8y",
+    "port": 3306
 }
