@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Library System{% endblock %}</title>
+    <!-- Corrected CSS path -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">Library System</div>
+        <div class="nav-links">
+            {% if session.loggedin %}
+            Hello, {{ session.username }} |
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('view_books') }}">Books</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Corrected JS path -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

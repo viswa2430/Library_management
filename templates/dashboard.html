@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2>Welcome, {{ username }}!</h2>
+{% if role == 'admin' %}
+<p>You are an Admin. You can <a href="{{ url_for('add_book') }}">Add Books</a> or <a
+        href="{{ url_for('view_books') }}">View Books</a>.</p>
+{% else %}
+<p>You are a User. You can <a href="{{ url_for('view_books') }}">View Books</a> to borrow.</p>
+{% endif %}
+{% endblock %}

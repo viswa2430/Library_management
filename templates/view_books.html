@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}View Books{% endblock %}
+
+{% block content %}
+<h2>Available Books</h2>
+<table class="books-table">
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Quantity</th>
+        <th>Action</th>
+    </tr>
+    {% for book in books %}
+    <tr>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.quantity }}</td>
+        <td>
+            {% if role != 'admin' %}
+            {% if book.quantity > 0 %}
+            <a href="{{ url_for('borrow', book_id=book.id) }}" class="btn-borrow"
+                onclick="return confirmBorrow('{{ book.title }}')">Borrow</a>
+            {% else %}
+            <span class="not-available">Not Available</span>
+            {% endif %}
+            {% else %}
+            Admin
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Borrowed Books</h2>
+<table class="books-table">
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Borrow Date</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    {% for transaction in borrowed %}
+    <tr>
+        <td>{{ transaction.title }}</td>
+        <td>{{ transaction.author }}</td>
+        <td>{{ transaction.borrow_date }}</td>
+        <td>{{ transaction.status }}</td>
+        <td>
+            {% if transaction.status == 'borrowed' %}
+            <a href="{{ url_for('return_book', transaction_id=transaction.id) }}" class="btn-borrow"
+                onclick="return confirm('Return this book?')">Return</a>
+            {% else %}
+            Returned
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<script>
+    function confirmBorrow(title) {
+        return confirm(`Do you want to borrow "${title}"?`);
+    }
+</script>
+{% endblock %}

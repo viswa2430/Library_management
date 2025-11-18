@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Return Book{% endblock %}
+
+{% block content %}
+<h2>Return Book</h2>
+
+{% if transaction %}
+<p>Book: <strong>{{ transaction.title }}</strong></p>
+<p>Author: <strong>{{ transaction.author }}</strong></p>
+<p>Borrow Date: <strong>{{ transaction.borrow_date }}</strong></p>
+<p>Status: <strong>{{ transaction.status }}</strong></p>
+
+{% if transaction.status == 'borrowed' %}
+<form method="POST" action="{{ url_for('confirm_return', transaction_id=transaction.id) }}">
+    <button type="submit" class="btn-add">Confirm Return</button>
+    <a href="{{ url_for('dashboard') }}" class="btn-borrow">Cancel</a>
+</form>
+{% else %}
+<p>This book is already returned.</p>
+<a href="{{ url_for('dashboard') }}" class="btn-borrow">Back to Dashboard</a>
+{% endif %}
+
+{% else %}
+<p>Invalid transaction.</p>
+<a href="{{ url_for('dashboard') }}" class="btn-borrow">Back to Dashboard</a>
+{% endif %}
+{% endblock %}
